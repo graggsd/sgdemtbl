@@ -1,0 +1,12 @@
+Package: sgdemtbl
+Title: Demographics Table
+Version: 0.0.0.9000
+Authors@R: person("Stephen", "Gragg", email = "graggsd@uab.edu", role = c("aut", "cre"))
+Description: Generates a demographics table.
+Depends: R (>= 3.4.0)
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Imports: DescTools (>= 0.99.20),
+    stats
