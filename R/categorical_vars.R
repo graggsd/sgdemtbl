@@ -10,6 +10,16 @@ cat_compare <- function(data, categorical.covariate, outcome,
     # Form contingency table
     cat.tbl <- xtabs(form, data = data, drop.unused.levels = T)
 
+    # Test for size of table if using fisher's exact test
+    if(categorical.test == "fisher.exact" &
+       (dim(cat.tbl)[1] != 2 | dim(cat.tbl)[2] != 2)) {
+
+        stop("If using Fisher's exact test, be sure there are only 2 levels, ",
+             "to both the outcome variable and the categorical variable of ",
+             "interest")
+
+    }
+
     # Change the column names to reflect the outcome variable
     colnames(cat.tbl) <- paste0(colnames(cat.tbl), ".", outcome)
 
