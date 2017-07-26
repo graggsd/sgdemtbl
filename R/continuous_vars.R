@@ -5,7 +5,7 @@
 cont_compare <- function(data, continuous.covariate,
                          outcome, continuous.test = c("wilcox.test",
                                                       "students.t.test",
-                                                      "kruskall.wallis.test",
+                                                      "kruskal.wallis.test",
                                                       "omnibus.f.test")){
 
     if ("wilcox.test" %in% continuous.test &
@@ -84,7 +84,7 @@ cont_compare <- function(data, continuous.covariate,
 
         p_val <- wilcox.test(data[,continuous.covariate] ~ data[,outcome])$p.value
 
-    } else if (continuous.test == "kruskall.wallis.test") {
+    } else if (continuous.test == "kruskal.wallis.test") {
 
         p_val <- kruskal.test(data[,continuous.covariate] ~ as.factor(data[,outcome]))$p.value
     }
