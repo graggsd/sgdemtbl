@@ -1,5 +1,7 @@
 cat_compare <- function(data, categorical.covariate, outcome,
-                        categorical.test = "likelihood.ratio.chi.square"){
+                        categorical.test = c("likelihood.ratio.chi.square",
+                                             "pearson.chi.square",
+                                             "fisher.exact")){
 
     # Generate formula to be used by xtabs function
     form <- as.formula(paste0("~", "`", categorical.covariate, "`",
@@ -10,16 +12,6 @@ cat_compare <- function(data, categorical.covariate, outcome,
 
     # Change the column names to reflect the outcome variable
     colnames(cat.tbl) <- paste0(colnames(cat.tbl), ".", outcome)
-
-    # Make sure that the selected test is among those available
-    if (!(categorical.test %in% c("likelihood.ratio.chi.square",
-                                  "pearson.chi.square", "fisher.exact"))){
-
-        stop("Stated categorical test must be one of the following:
-             'likelihood.ratio.chi.square', 'pearson.chi.square',
-             'fisher.exact'")
-
-    }
 
     # Choose which proportionality test to perform
     if (categorical.test == "likelihood.ratio.chi.square"){
@@ -79,8 +71,10 @@ cat_compare <- function(data, categorical.covariate, outcome,
 
 }
 
-multi_cat_compare <- function(data, categorical.covariates,
-                              outcome, categorical.tests = "likelihood.ratio.chi.square"){
+multi_cat_compare <- function(data,
+                              categorical.covariates,
+                              outcome,
+                              categorical.tests = "likelihood.ratio.chi.square"){
 
     if (length(categorical.tests) == 1){
 

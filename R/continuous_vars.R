@@ -1,8 +1,12 @@
 # This function takes a set of data, a given outcome variable, and a continuous variable,
 # And tests for differences in this variable between the various outcomes using
 # Either parametric or non-parametric tests
+
 cont_compare <- function(data, continuous.covariate,
-                         outcome, continuous.test = "wilcox.test"){
+                         outcome, continuous.test = c("wilcox.test",
+                                                      "students.t.test",
+                                                      "kruskall.wallis.test",
+                                                      "omnibus.f.test")){
 
     # Turn data into a numeric
     data[,continuous.covariate] <- as.numeric(data[,continuous.covariate])
@@ -57,16 +61,6 @@ cont_compare <- function(data, continuous.covariate,
     # Add the column indicating what each metric refers to
     sum.table <- cbind(quant = quant, sum.table)
 
-    # Make sure that the selected test is among those available
-    if (!(continuous.test %in% c("omnibus.f.test",
-                                 "students.t.test", "kruskall.wallis.test", "wilcox.test"))){
-
-        stop("Stated categorical test must be one of the following:
-             'omnibus.f.test', 'students.t.test',
-             'kruskall.wallis.test', 'wilcox.test'")
-
-    }
-
     # Choose which proportionality test to perform
     if (continuous.test == "omnibus.f.test"){
 
@@ -111,7 +105,7 @@ cont_compare <- function(data, continuous.covariate,
 
 
 multi_cont_compare <- function(data, continuous.covariates, outcome,
-                               continuous.tests = "wilcox.test"){
+                               continuous.tests = "wilcox.test") {
 
     if (length(continuous.tests) == 1){
 
