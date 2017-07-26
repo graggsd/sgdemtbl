@@ -80,15 +80,13 @@ cont_compare <- function(data, continuous.covariate,
 
         p_val <- t.test(data[,continuous.covariate] ~ data[,outcome])$p.value
 
-        #     } else if (continuous.test == "kruskall.wallis.test"){
-        #
-        #         # TBD
-        #         p.val <- fisher.test(cat.tbl)$p.value
-        #
     } else if (continuous.test == "wilcox.test"){
 
         p_val <- wilcox.test(data[,continuous.covariate] ~ data[,outcome])$p.value
 
+    } else if (continuous.test == "kruskall.wallis.test") {
+
+        p_val <- kruskal.test(data[,continuous.covariate] ~ data[,outcome])$p.value
     }
 
     # Add the p-value as a column in the table
