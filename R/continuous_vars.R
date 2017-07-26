@@ -86,7 +86,7 @@ cont_compare <- function(data, continuous.covariate,
 
     } else if (continuous.test == "kruskall.wallis.test") {
 
-        p_val <- kruskal.test(data[,continuous.covariate] ~ data[,outcome])$p.value
+        p_val <- kruskal.test(data[,continuous.covariate] ~ as.factor(data[,outcome]))$p.value
     }
 
     # Add the p-value as a column in the table
