@@ -8,6 +8,16 @@ cont_compare <- function(data, continuous.covariate,
                                                       "kruskall.wallis.test",
                                                       "omnibus.f.test")){
 
+    if ("wilcox.test" %in% continuous.test &
+        length(unique(data[,outcome])) > 2 |
+        "students.t.test" %in% continuous.test &
+        length(unique(data[,outcome])) > 2) {
+
+        stop("If 'wilcox.test' or 'students.t.test' are selected, ",
+             "then there can only be two levels in the outcome variable.")
+
+    }
+
     # Turn data into a numeric
     data[,continuous.covariate] <- as.numeric(data[,continuous.covariate])
 
