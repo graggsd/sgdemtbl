@@ -3,6 +3,7 @@ output: github_document
 ---
 
 ![](https://travis-ci.org/graggsd/sgdemtbl.svg?branch=master)
+![Build status](https://ci.appveyor.com/api/projects/status/xsi5j0d84foj8stg?svg=true)](https://ci.appveyor.com/project/graggsd/sgdemtbl)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
