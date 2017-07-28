@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-![Travis Build Status](https://travis-ci.org/graggsd/sgdemtbl.svg?branch=master)
+[![Build Status](https://travis-ci.org/graggsd/sgdemtbl.svg?branch=master)](https://travis-ci.org/graggsd/sgdemtbl)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/xsi5j0d84foj8stg?svg=true)](https://ci.appveyor.com/project/graggsd/sgdemtbl)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
