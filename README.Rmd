@@ -3,7 +3,7 @@ output: github_document
 ---
 
 [![Build Status](https://travis-ci.org/graggsd/sgdemtbl.svg?branch=master)](https://travis-ci.org/graggsd/sgdemtbl)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/xsi5j0d84foj8stg?svg=true)](https://ci.appveyor.com/project/graggsd/sgdemtbl)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/xsi5j0d84foj8stg/branch/master?svg=true)](https://ci.appveyor.com/project/graggsd/sgdemtbl/branch/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
