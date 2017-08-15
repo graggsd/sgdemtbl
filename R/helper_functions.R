@@ -1,3 +1,12 @@
+# Remake contingency table with missing values
+make_miss_tbl <- function(form, data){
+
+    return(as.matrix(xtabs(form, data = data,
+                           na.action = na.pass,
+                           addNA = TRUE)))
+
+}
+
 #' Round p-values and indicate significance with asterisks
 #'
 #' @param p.val P-value to be modified
@@ -43,8 +52,9 @@ calc_percent_format <- function(input.tbl){
 #' Count the NA values in a table
 #'
 #' @param input.tbl Table in which to count NA values
-#' @return A vector with the number of NA's per column and the total number of
-#' NA's as the first value in the vector
+#' @return A vector, the first value of which is the total number of NAs for all
+#' outcome categories. The remaining values are the category-specific number of
+#' missing values.
 count_NAs_in_tbl <- function(input.tbl) {
 
     if (sum(is.na(rownames(input.tbl))) > 0) {

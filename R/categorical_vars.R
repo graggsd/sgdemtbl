@@ -42,8 +42,7 @@ cat_compare <- function(data, categorical.covariate, outcome,
     cat.tbl <- calc_percent_format(cat.tbl)
 
     # Remake contingency table with missing values
-    miss.tbl <- as.matrix(xtabs(form, data = data,
-                                na.action = na.pass, exclude = NULL))
+    miss.tbl <- make_miss_tbl(form = form, data = data)
 
     # Count number of NA values
     miss.tbl <- count_NAs_in_tbl(miss.tbl)

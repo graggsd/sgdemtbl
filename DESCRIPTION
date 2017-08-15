@@ -10,3 +10,4 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports: DescTools (>= 0.99.20),
     stats
+Suggests: testthat

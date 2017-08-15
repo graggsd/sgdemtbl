@@ -48,7 +48,7 @@ cont_compare <- function(data, continuous.covariate,
     form <- as.formula(paste0("~", "`", continuous.covariate,"`", "+", "`", outcome, "`"))
 
     # Make a table to count the number of missing values
-    miss.tbl <- as.matrix(xtabs(form, data = data, na.action = na.pass, exclude = NULL))
+    miss.tbl <- make_miss_tbl(form = form, data = data)
 
     # Count number of NA values
     miss.tbl <- count_NAs_in_tbl(miss.tbl)
