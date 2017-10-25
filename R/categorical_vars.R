@@ -1,7 +1,11 @@
-cat_compare <- function(data, categorical.covariate, outcome,
+cat_compare <- function(data,
+                        categorical.covariate,
+                        outcome,
                         categorical.test = c("likelihood.ratio.chi.square",
                                              "pearson.chi.square",
-                                             "fisher.exact")){
+                                             "fisher.exact"),
+                        format_pval = FALSE,
+                        p_val_digits = 4){
 
     # Generate formula to be used by xtabs function
     form <- as.formula(paste0("~", "`", categorical.covariate, "`",
@@ -33,7 +37,9 @@ cat_compare <- function(data, categorical.covariate, outcome,
     }
 
     # Change formatting of the p value
-    p.val <- format_pval_dem(p.val)
+    p.val <- format_pval_dem(p.val,
+                             format_pval = format_pval,
+                             p_val_digits = p_val_digits)
 
     # Add totals to left-hand side of table
     cat.tbl <- cbind(Total = rowSums(cat.tbl), cat.tbl)
@@ -83,7 +89,9 @@ cat_compare <- function(data, categorical.covariate, outcome,
 multi_cat_compare <- function(data,
                               categorical.covariates,
                               outcome,
-                              categorical.tests = "likelihood.ratio.chi.square"){
+                              categorical.tests = "likelihood.ratio.chi.square",
+                              format_pval = FALSE,
+                              p_val_digits = 4){
 
     if (length(categorical.tests) == 1){
 
@@ -102,13 +110,23 @@ multi_cat_compare <- function(data,
     for (i in 1:length(categorical.covariates)){
 
         if (i == 1){
-            multi.cat.tbl <- cat_compare(data, categorical.covariates[i],
-                                         outcome, categorical.test = categorical.tests[i^fact])
+            multi.cat.tbl <-
+                cat_compare(data,
+                            categorical.covariates[i],
+                            outcome,
+                            categorical.test = categorical.tests[i^fact],
+                            format_pval = format_pval,
+                            p_val_digits = p_val_digits)
         }
 
         else {
-            cat.tbl <- cat_compare(data, categorical.covariates[i],
-                                   outcome, categorical.test = categorical.tests[i^fact])
+            cat.tbl <-
+                cat_compare(data,
+                            categorical.covariates[i],
+                            outcome,
+                            categorical.test = categorical.tests[i^fact],
+                            format_pval = format_pval,
+                            p_val_digits = p_val_digits)
             multi.cat.tbl <- rbind(multi.cat.tbl, cat.tbl)
         }
     }

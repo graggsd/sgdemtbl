@@ -2,11 +2,15 @@
 # And tests for differences in this variable between the various outcomes using
 # Either parametric or non-parametric tests
 
-cont_compare <- function(data, continuous.covariate,
-                         outcome, continuous.test = c("wilcox.test",
-                                                      "students.t.test",
-                                                      "kruskal.wallis.test",
-                                                      "omnibus.f.test")){
+cont_compare <- function(data,
+                         continuous.covariate,
+                         outcome,
+                         continuous.test = c("wilcox.test",
+                                             "students.t.test",
+                                             "kruskal.wallis.test",
+                                             "omnibus.f.test"),
+                         format_pval = FALSE,
+                         p_val_digits = 4) {
 
     if ("wilcox.test" %in% continuous.test &
         length(unique(data[,outcome])) > 2 |
@@ -90,14 +94,9 @@ cont_compare <- function(data, continuous.covariate,
     }
 
     # Add the p-value as a column in the table
-    if (p_val < 0.001){
-        p_val <- "<0.001**"
-    } else {
-        p_val <- round(p_val, 3)
-        if (p_val < 0.05){
-            p_val <- paste0(p_val, "*")
-        }
-    }
+    p_val <- format_pval_dem(p_val,
+                             format_pval = format_pval,
+                             p_val_digits = p_val_digits)
 
     sum.table <- cbind(sum.table, P = c(p_val, rep("", nrow(sum.table) - 1)),
                        test = c(continuous.test, rep("", nrow(sum.table) - 1)))
@@ -112,8 +111,12 @@ cont_compare <- function(data, continuous.covariate,
 }
 
 
-multi_cont_compare <- function(data, continuous.covariates, outcome,
-                               continuous.tests = "wilcox.test") {
+multi_cont_compare <- function(data,
+                               continuous.covariates,
+                               outcome,
+                               continuous.tests = "wilcox.test",
+                               format_pval = FALSE,
+                               p_val_digits = 4) {
 
     if (length(continuous.tests) == 1){
 
@@ -130,13 +133,23 @@ multi_cont_compare <- function(data, continuous.covariates, outcome,
 
     }
 
-    multi.tbl <- cont_compare(data, continuous.covariates[1], outcome,
-                              continuous.test = continuous.tests[1])
+    multi.tbl <- cont_compare(data,
+                              continuous.covariates[1],
+                              outcome,
+                              continuous.test = continuous.tests[1],
+                              format_pval = format_pval,
+                              p_val_digits = p_val_digits)
 
     if (length(continuous.covariates) > 1){
         for (i in 2:length(continuous.covariates)){
-            multi.tbl <- rbind(multi.tbl, cont_compare(data, continuous.covariates[i],
-                                                       outcome, continuous.test = continuous.tests[i^fact]))
+            multi.tbl <-
+                rbind(multi.tbl,
+                      cont_compare(data,
+                                   continuous.covariates[i],
+                                   outcome,
+                                   continuous.test = continuous.tests[i^fact],
+                                   format_pval = format_pval,
+                                   p_val_digits = p_val_digits))
         }
     }
 

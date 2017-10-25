@@ -11,20 +11,25 @@ make_miss_tbl <- function(form, data){
 #'
 #' @param p.val P-value to be modified
 #' @return Formatted p-value, rounded to the second decimal place and with asterisks to indicate significance
-format_pval_dem <- function(p.val){
+format_pval_dem <- function(p.val, format_pval = FALSE, p_val_digits = 4){
 
-    if (p.val < 0.01){
+    cutoff <- 1*10^(-1*p_val_digits)
 
-        p.val <- "<0.01**"
+    if (format_pval) {
 
-    } else if (p.val < 0.05){
+        if (p.val < cutoff) {
 
-        p.val <- paste0(round(p.val, digits = 2), "*")
+            p.val <- paste0("<", cutoff, "**")
 
+        } else if (p.val < 0.05) {
+
+            p.val <- paste0(round(p.val, digits = p_val_digits), "*")
+
+        } else {
+            p.val <- round(p.val,digits = p_val_digits)
+        }
     } else {
-
-        p.val <- round(p.val,digits = 2)
-
+        p.val <- round(p.val, digits = p_val_digits)
     }
 
     return(p.val)
