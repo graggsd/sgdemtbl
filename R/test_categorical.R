@@ -149,6 +149,7 @@ test_categorical <- function(data, predictor, response, strata = NULL) {
                                             colnames(out)[-(1:2)])
             return(out)
         }
+
         out <- lapply(strata_levels, by_strata, data, predictor, response,
                       strata)
         out <- do.call(cbind, res)
