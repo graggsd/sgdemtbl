@@ -4,9 +4,15 @@
 \alias{strat_dem_tbl}
 \title{Create a stratified demographics table}
 \usage{
-strat_dem_tbl(data, outcome, continuous.covariates = NULL,
-  continuous.tests = "wilcox.test", categorical.covariates = NULL,
-  categorical.tests = "likelihood.ratio.chi.square", strata.col = NULL)
+strat_dem_tbl(
+  data,
+  outcome,
+  continuous.covariates = NULL,
+  continuous.tests = "wilcox.test",
+  categorical.covariates = NULL,
+  categorical.tests = "likelihood.ratio.chi.square",
+  strata.col = NULL
+)
 }
 \arguments{
 \item{data}{A set of data with all covariates in separate columns and each row representing exactly 1 individual}

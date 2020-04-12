@@ -8,6 +8,7 @@ get_new_levels <- function(data, col) {
     return(out)
 }
 
+#' @export
 count_categorical <- function(data,
                               predictor,
                               response = NULL,

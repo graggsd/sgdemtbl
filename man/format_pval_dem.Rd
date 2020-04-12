@@ -4,7 +4,7 @@
 \alias{format_pval_dem}
 \title{Round p-values and indicate significance with asterisks}
 \usage{
-format_pval_dem(p.val)
+format_pval_dem(p.val, format_pval = FALSE, p_val_digits = 4)
 }
 \arguments{
 \item{p.val}{P-value to be modified}

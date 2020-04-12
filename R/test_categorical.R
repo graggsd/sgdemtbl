@@ -133,6 +133,7 @@ test_categorical_engine <- function(data, predictor, response) {
     return(out)
 }
 
+#' @export
 test_categorical <- function(data, predictor, response, strata = NULL) {
 
     if (!is.null(strata)) {

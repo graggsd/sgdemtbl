@@ -10,8 +10,9 @@ count_NAs_in_tbl(input.tbl)
 \item{input.tbl}{Table in which to count NA values}
 }
 \value{
-A vector with the number of NA's per column and the total number of
-NA's as the first value in the vector
+A vector, the first value of which is the total number of NAs for all
+outcome categories. The remaining values are the category-specific number of
+missing values.
 }
 \description{
 Count the NA values in a table
