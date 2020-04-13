@@ -91,14 +91,9 @@ count_categorical <- function(data,
     # to_unnest <- setdiff(colnames(out), c("name", "value"))
     # return(unnest(out, cols = to_unnest, .sep = "_"))
 
-    format_nperc <- function(x) {
-        paste0(x$n, "(", sprintf("%.1f", x$perc), ")")
-    }
     out <- out %>%
         dplyr::mutate_at(vars(-tidyselect::any_of(c("name", "value"))),
                          map_chr,
                          format_nperc)
     return(out)
 }
-
-

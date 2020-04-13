@@ -32,7 +32,7 @@ cat_compare <- function(data,
         p.val <- DescTools::GTest(cat.tbl, correct = "none")$p.value
     } else if (categorical.test == "pearson.chi.square"){
         p.val <- chisq.test(cat.tbl)$p.value
-    } else if (categorical.test == "fisher.exact"){
+    } else if (categorical.test == "fisher.exact") {
         p.val <- fisher.test(cat.tbl)$p.value
     }
 
