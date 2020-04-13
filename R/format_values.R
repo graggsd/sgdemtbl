@@ -29,7 +29,7 @@ format_p <- function(data) {
     idx <- (p >= 0.001) & (p < 0.01)
     new_p[idx] <- "p<0.01"
     idx <- p < 0.05
-    new_p[idx] <- paste0(new_p, "*")
+    new_p[idx] <- paste0(new_p[idx], "*")
     data$p <- new_p
     return(data)
 }
@@ -37,8 +37,8 @@ format_p <- function(data) {
 select_test <- function(data) {
     data$p <- data$pearson_p
     fisher_idx <- data$pref_test == "Fisher"
-    data$CI_lower[fisher_idx] <- data$fisher_CI_lower
-    data$CI_upper[fisher_idx] <- data$fisher_CI_upper
+    data$CI_lower[fisher_idx] <- data$fisher_CI_lower[fisher_idx]
+    data$CI_upper[fisher_idx] <- data$fisher_CI_upper[fisher_idx]
     data$p[fisher_idx] <- data$fisher_p[fisher_idx]
 
     data[, c("pearson_p",
