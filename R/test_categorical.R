@@ -61,9 +61,20 @@ test_fisher <- function(tab) {
 }
 
 test_prop <- function(tab) {
-    out <- c(OR_confint(tab),
-             test_pearson(tab),
-             test_fisher(tab))
+    pref_test <-
+        if(any(unlist(tab) < 5)) {
+            c(pref_test = "Fisher")
+        } else {
+            c(pref_test = "Pearson")
+        }
+    df_1 <- c(OR_confint(tab), test_pearson(tab), test_fisher(tab))
+    df_1_cols <- names(df_1)
+    df_1 <- matrix(df_1,
+                   nrow = 1,
+                   byrow = TRUE)
+    df_1 <- as.data.frame(df_1, stringsAsFactors = FALSE)
+    colnames(df_1) <- df_1_cols
+    out <- cbind(df_1, pref_test)
     return(out)
 }
 
@@ -126,7 +137,7 @@ test_categorical_engine <- function(data, predictor, response) {
     name_col <- unlist(name_col)
     val_col <- unlist(lapply(int_1, names))
     int_1 <- lapply(unlist(int_1, recursive = FALSE), test_prop)
-    col_names <- c("name", "value", names(int_1[[1]]))
+    col_names <- c("name", "value", colnames(int_1[[1]]))
     out <- do.call(rbind.data.frame, int_1)
     out <- cbind(name_col, val_col, out)
     colnames(out) <- col_names
@@ -134,8 +145,8 @@ test_categorical_engine <- function(data, predictor, response) {
 }
 
 #' @export
-test_categorical <- function(data, predictor, response, strata = NULL) {
-
+test_categorical <- function(data, predictor, response, strata = NULL, format = TRUE) {
+    # TODO fix the fact that this outputs a table that is all factors
     if (!is.null(strata)) {
         strata_levels <- get_new_levels(data, strata)
         data[, strata] <- as.character(data[, strata])
@@ -158,6 +169,11 @@ test_categorical <- function(data, predictor, response, strata = NULL) {
         out <- test_categorical_engine(data, predictor, response)
     }
 
+    if(format) {
+        out <- select_test(out)
+        out <- format_OR(out)
+        out <- format_p(out)
+    }
     return(out)
-
 }
+
