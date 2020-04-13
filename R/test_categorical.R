@@ -78,6 +78,14 @@ test_prop <- function(tab) {
     return(out)
 }
 
+make_tabulatable <- function(x) {
+    if(!(class(x) %in% c("factor", "character"))) {
+        return(as.character(x))
+    } else {
+        return(x)
+    }
+}
+
 tab_rf <- function(predictor, response, data) {
     if (is.factor(data[, predictor])) {
         predictor_values <- levels(data[, predictor])
@@ -87,14 +95,20 @@ tab_rf <- function(predictor, response, data) {
     base_val <- predictor_values[1]
     predictor_values <- predictor_values[-1]
 
-    data[, predictor] <- as.character(data[, predictor])
+    data[, predictor] <- make_tabulatable(data[, predictor])
 
     out <- vector(mode = "list", length = length(predictor_values))
     names(out) <- predictor_values
     for (pred_val in predictor_values) {
         row_idx <- which(data[, predictor] %in% c(base_val, pred_val))
-        out[[pred_val]] <- table(data[row_idx, predictor],
-                                 data[row_idx, response])
+        # Subset data and compare to baseline
+        data_tmp <- data[row_idx, ]
+        # Drop unused levels before tabulation if column is a factor
+        if (is.factor(data[, predictor])) {
+            data_tmp[, predictor] <- droplevels(data_tmp[, predictor])
+        }
+        out[[pred_val]] <- table(data_tmp[, predictor],
+                                 data_tmp[, response])
     }
     return(out)
 }
