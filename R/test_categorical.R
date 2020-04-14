@@ -159,7 +159,11 @@ test_categorical_engine <- function(data, predictor, response) {
 }
 
 #' @export
-test_categorical <- function(data, predictor, response, strata = NULL, format = TRUE) {
+test_categorical <- function(data,
+                             predictor,
+                             response,
+                             strata = NULL,
+                             format = TRUE) {
     # TODO fix the fact that this outputs a table that is all factors
     if (!is.null(strata)) {
         strata_levels <- get_new_levels(data, strata)
@@ -168,26 +172,38 @@ test_categorical <- function(data, predictor, response, strata = NULL, format = 
         tmp_data[, strata] <- "Total"
         data <- rbind(tmp_data, data)
 
-        by_strata <- function(strata_val, data, predictor, response, strata) {
-            data <- data[which(data[, strata] == strata_val), ]
-            out <- test_categorical_engine(data, predictor, response)
-            colnames(out)[-(1:2)] <- paste0(strata_val, "_",
-                                            colnames(out)[-(1:2)])
-            return(out)
-        }
+        by_strata <-
+            function(strata_val,
+                     data,
+                     predictor,
+                     response,
+                     strata) {
+                data <- data[which(data[, strata] == strata_val), ]
+                out <-
+                    test_categorical_engine(data, predictor, response)
+                colnames(out)[-(1:2)] <- paste0(strata_val, "_",
+                                                colnames(out)[-(1:2)])
+                return(out)
+            }
 
-        out <- lapply(strata_levels, by_strata, data, predictor, response,
-                      strata)
+        out <-
+            lapply(strata_levels,
+                   by_strata,
+                   data,
+                   predictor,
+                   response,
+                   strata)
         out <- do.call(cbind, res)
     } else {
         out <- test_categorical_engine(data, predictor, response)
     }
 
-    if(format) {
+    rownames(out) <- 1:nrow(out)
+
+    if (format) {
         out <- select_test(out)
         out <- format_OR(out)
         out <- format_p(out)
     }
     return(out)
 }
-
