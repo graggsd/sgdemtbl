@@ -2,5 +2,7 @@
 
 export(count_categorical)
 export(strat_dem_tbl)
+export(summarise_continuous)
 export(test_categorical)
+export(test_continuous)
 import(stats)
